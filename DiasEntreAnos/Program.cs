@@ -1,53 +1,73 @@
-﻿//DiasEntreAnos
-internal class Program
+﻿internal class Program
 {
     private static void Main(string[] args)
     {
-        int ano_inicial, ano_final;
-        int aux, soma_dias;
+        int anoInicial = 0, anoFinal = 1, ano_corrente = 0, dias_entre_anos = 0;
 
-        soma_dias = 0;
-
-        Console.WriteLine("Digite o primeiro ano");
-        ano_inicial = int.Parse(Console.ReadLine());
-
-        Console.WriteLine("Digite o segundo ano");
-        ano_final = int.Parse(Console.ReadLine());
-
-        if(ano_inicial == ano_final)
+        void EntradaDados()
         {
-            Console.WriteLine("Total de dias entre os anos: ZERO");
-        }
-        else
-        {
-            if(ano_inicial > ano_final)
+            bool flag = false;
+            do
             {
-                aux = ano_final;
-                ano_final = ano_inicial;
-                ano_inicial = aux;
-            }
-            for(int i = ano_inicial; i <= ano_final; i++) 
-            {
-                if(i % 4 == 0) 
+                if (flag)
                 {
-                    if(i % 100 == 0)
+                    Console.WriteLine("ATENÇÃO !!!");
+                    Console.WriteLine("ANO INICIAL TEM QUE SER MENOR QUE O FINAL");
+                }
+                Console.WriteLine("DIGITE O ANO INICIAL: ");
+                anoInicial = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("DIGITE O ANO FINAL: ");
+                anoFinal = int.Parse(Console.ReadLine());
+
+                flag = true;
+
+            } while (anoInicial > anoFinal);
+        }
+
+        bool VerficarAnoBissexto()
+        {
+            bool flag = false;
+
+            if (ano_corrente % 4 == 0)
+            {
+                if (ano_corrente % 100 == 0)
+                {
+                    if (ano_corrente % 400 == 0)
                     {
-                        if(i % 400 == 0)
-                        {
-                            soma_dias += 1;
-                        }
-                    }
-                    else
-                    {
-                        soma_dias += 1;
+                        flag = true;
                     }
                 }
-                soma_dias += 365;
+                else
+                {
+                    flag = true;
+                }
             }
 
-            Console.WriteLine("Total de dias entre os anos: " + soma_dias);
+            return flag;
         }
 
+        void SomaEntreNumeros()
+        {
+
+            for (ano_corrente = anoInicial; ano_corrente <= anoFinal; ano_corrente++)
+            {
+
+                if (VerficarAnoBissexto())
+                {
+                    dias_entre_anos++;
+                }
+                dias_entre_anos += 365;
+            }
+        }
+        void ExibirDados()
+        {
+            Console.WriteLine("A quantidade de dias entre o ano " + anoInicial + " e " + anoFinal + " é " + dias_entre_anos);
+        }
+
+        EntradaDados();
+        SomaEntreNumeros();
+        ExibirDados();
 
     }
 }
